@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import WeatherSearch from "./components/WeatherSearch";
 import WeatherCard from "./components/WeatherCard";
 import { fetchWeather } from "./services/weatherApi";
@@ -8,7 +8,14 @@ function App() {
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [recent, setRecent] = useState([]);
+  const [recent, setRecent] = useState(() => {
+    const saved = localStorage.getItem("recentCities");
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("recentCities", JSON.stringify(recent));
+  }, [recent]);
 
   const handleSearch = async (city) => {
     setLoading(true);
@@ -38,8 +45,17 @@ function App() {
 
       {recent.length > 0 && (
         <div style={{ marginTop: "16px" }}>
-          <p style={{ marginBottom: "8px" }}><strong>Recent searches:</strong></p>
-          <div style={{ display: "flex", gap: "8px", justifyContent: "center", flexWrap: "wrap" }}>
+          <p style={{ marginBottom: "8px" }}>
+            <strong>Recent searches:</strong>
+          </p>
+          <div
+            style={{
+              display: "flex",
+              gap: "8px",
+              justifyContent: "center",
+              flexWrap: "wrap",
+            }}
+          >
             {recent.map((city) => (
               <button
                 key={city}
@@ -62,9 +78,7 @@ function App() {
       {loading && <p style={{ marginTop: "16px" }}>Loading...</p>}
 
       {error && (
-        <p style={{ marginTop: "16px", color: "crimson" }}>
-          {error}
-        </p>
+        <p style={{ marginTop: "16px", color: "crimson" }}>{error}</p>
       )}
 
       {!loading && !error && <WeatherCard weather={weatherData} />}
