@@ -1,12 +1,14 @@
 import { useState } from "react";
 import WeatherSearch from "./components/WeatherSearch";
+import { fetchWeather } from "./services/weatherApi";
 import "./styles/app.css";
 
 function App() {
-  const [lastSearchedCity, setLastSearchedCity] = useState("");
+  const [weatherData, setWeatherData] = useState(null);
 
-  const handleSearch = (city) => {
-    setLastSearchedCity(city);
+  const handleSearch = async (city) => {
+    const data = await fetchWeather(city);
+    setWeatherData(data);
   };
 
   return (
@@ -15,10 +17,12 @@ function App() {
 
       <WeatherSearch onSearch={handleSearch} />
 
-      {lastSearchedCity && (
-        <p style={{ marginTop: "16px" }}>
-          Last searched city: <strong>{lastSearchedCity}</strong>
-        </p>
+      {weatherData && (
+        <div style={{ marginTop: "20px" }}>
+          <h2>{weatherData.city}</h2>
+          <p>{weatherData.temperature}°F</p>
+          <p>{weatherData.condition}</p>
+        </div>
       )}
     </div>
   );
