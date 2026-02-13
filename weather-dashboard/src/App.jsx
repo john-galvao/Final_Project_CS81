@@ -1,5 +1,6 @@
 import { useState } from "react";
 import WeatherSearch from "./components/WeatherSearch";
+import WeatherCard from "./components/WeatherCard";
 import { fetchWeather } from "./services/weatherApi";
 import "./styles/app.css";
 
@@ -17,13 +18,7 @@ function App() {
 
       <WeatherSearch onSearch={handleSearch} />
 
-      {weatherData && (
-        <div style={{ marginTop: "20px" }}>
-          <h2>{weatherData.city}</h2>
-          <p>{weatherData.temperature}°F</p>
-          <p>{weatherData.condition}</p>
-        </div>
-      )}
+      <WeatherCard weather={weatherData} />
     </div>
   );
 }
