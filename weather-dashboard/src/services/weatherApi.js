@@ -15,13 +15,14 @@ export async function fetchWeather(city) {
   const weatherRes = await fetch(weatherUrl);
   const weatherData = await weatherRes.json();
 
- const current = weatherData.current_weather;
- 
- const windMph = Math.round(current.windspeed * 0.621371);
- 
- return {
-  city: name,
-  temperature: Math.round(current.temperature),
-  condition: `Wind ${windMph} mph`,
-};
+  const current = weatherData.current_weather;
+
+  const tempF = Math.round((current.temperature * 9) / 5 + 32);
+  const windMph = Math.round(current.windspeed * 0.621371);
+
+  return {
+    city: name,
+    temperature: tempF,
+    condition: `Wind ${windMph} mph`,
+  };
 }
