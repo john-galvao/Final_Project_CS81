@@ -6,10 +6,22 @@ import "./styles/app.css";
 
 function App() {
   const [weatherData, setWeatherData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSearch = async (city) => {
-    const data = await fetchWeather(city);
-    setWeatherData(data);
+    setLoading(true);
+    setError("");
+    setWeatherData(null);
+
+    try {
+      const data = await fetchWeather(city);
+      setWeatherData(data);
+    } catch (err) {
+      setError(err.message || "Something went wrong.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -18,7 +30,15 @@ function App() {
 
       <WeatherSearch onSearch={handleSearch} />
 
-      <WeatherCard weather={weatherData} />
+      {loading && <p style={{ marginTop: "16px" }}>Loading...</p>}
+
+      {error && (
+        <p style={{ marginTop: "16px", color: "crimson" }}>
+          {error}
+        </p>
+      )}
+
+      {!loading && !error && <WeatherCard weather={weatherData} />}
     </div>
   );
 }
