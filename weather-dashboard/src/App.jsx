@@ -8,6 +8,7 @@ function App() {
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [recent, setRecent] = useState([]);
 
   const handleSearch = async (city) => {
     setLoading(true);
@@ -17,6 +18,11 @@ function App() {
     try {
       const data = await fetchWeather(city);
       setWeatherData(data);
+
+      setRecent((prev) => {
+        const updated = [data.city, ...prev.filter((c) => c !== data.city)];
+        return updated.slice(0, 5);
+      });
     } catch (err) {
       setError(err.message || "Something went wrong.");
     } finally {
@@ -29,6 +35,29 @@ function App() {
       <h1>Weather Dashboard</h1>
 
       <WeatherSearch onSearch={handleSearch} />
+
+      {recent.length > 0 && (
+        <div style={{ marginTop: "16px" }}>
+          <p style={{ marginBottom: "8px" }}><strong>Recent searches:</strong></p>
+          <div style={{ display: "flex", gap: "8px", justifyContent: "center", flexWrap: "wrap" }}>
+            {recent.map((city) => (
+              <button
+                key={city}
+                onClick={() => handleSearch(city)}
+                style={{
+                  padding: "6px 10px",
+                  borderRadius: "8px",
+                  border: "1px solid #ccc",
+                  cursor: "pointer",
+                  backgroundColor: "white",
+                }}
+              >
+                {city}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       {loading && <p style={{ marginTop: "16px" }}>Loading...</p>}
 
