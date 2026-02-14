@@ -37,6 +37,11 @@ function App() {
     }
   };
 
+  const clearRecent = () => {
+    setRecent([]);
+    localStorage.removeItem("recentCities");
+  };
+
   return (
     <div className="app">
       <h1>Weather Dashboard</h1>
@@ -45,9 +50,34 @@ function App() {
 
       {recent.length > 0 && (
         <div style={{ marginTop: "16px" }}>
-          <p style={{ marginBottom: "8px" }}>
-            <strong>Recent searches:</strong>
-          </p>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              gap: "12px",
+              alignItems: "center",
+              marginBottom: "8px",
+              flexWrap: "wrap",
+            }}
+          >
+            <p style={{ margin: 0 }}>
+              <strong>Recent searches:</strong>
+            </p>
+
+            <button
+              onClick={clearRecent}
+              style={{
+                padding: "6px 10px",
+                borderRadius: "8px",
+                border: "1px solid #ccc",
+                cursor: "pointer",
+                backgroundColor: "white",
+              }}
+            >
+              Clear
+            </button>
+          </div>
+
           <div
             style={{
               display: "flex",
