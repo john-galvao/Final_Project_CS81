@@ -28,3 +28,4 @@ This is an interactive weather dashboard built with React and Vite. Users can se
 https://john-galvao.github.io/Final_Project_CS81/
 
 ## Screenshot
+![App Screenshot](./screenshot.png)
