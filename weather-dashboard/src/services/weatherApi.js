@@ -24,5 +24,6 @@ export async function fetchWeather(city) {
     city: name,
     temperature: tempF,
     condition: `Wind ${windMph} mph`,
+    time: current.time,
   };
 }

@@ -15,11 +15,17 @@ function WeatherCard({ weather }) {
         marginRight: "auto",
       }}
     >
-      <h2>{weather.city}</h2>
-      <p style={{ fontSize: "22px", margin: "8px 0" }}>
+      <h2 style={{ margin: "0 0 10px 0" }}>{weather.city}</h2>
+
+      <p style={{ fontSize: "24px", margin: "0 0 8px 0" }}>
         {weather.temperature}°F
       </p>
-      <p>{weather.condition}</p>
+
+      <p style={{ margin: "0 0 8px 0" }}>{weather.condition}</p>
+
+      <p style={{ margin: 0, color: "#666", fontSize: "14px" }}>
+        Updated: {weather.time}
+      </p>
     </div>
   );
 }
