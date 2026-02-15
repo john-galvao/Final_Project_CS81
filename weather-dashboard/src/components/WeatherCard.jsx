@@ -1,6 +1,8 @@
 function WeatherCard({ weather }) {
   if (!weather) return null;
 
+  const formattedTime = new Date(weather.time).toLocaleString();
+
   return (
     <div
       style={{
@@ -24,7 +26,7 @@ function WeatherCard({ weather }) {
       <p style={{ margin: "0 0 8px 0" }}>{weather.condition}</p>
 
       <p style={{ margin: 0, color: "#666", fontSize: "14px" }}>
-        Updated: {weather.time}
+        Updated: {formattedTime}
       </p>
     </div>
   );
