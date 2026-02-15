@@ -127,10 +127,24 @@ function App() {
       {loading && <p style={{ marginTop: "16px" }}>Loading...</p>}
 
       {error && (
-        <p style={{ marginTop: "16px", color: "crimson" }}>{error}</p>
+        <p style={{ marginTop: "16px", color: "crimson" }}>
+          {error}
+        </p>
       )}
 
-      {!loading && !error && <WeatherCard weather={weatherData} units={units} />}
+      {!loading && !error && (
+        <WeatherCard weather={weatherData} units={units} />
+      )}
+
+      <footer
+        style={{
+          marginTop: "40px",
+          fontSize: "14px",
+          color: "#666",
+        }}
+      >
+        Data provided by Open-Meteo
+      </footer>
     </div>
   );
 }
