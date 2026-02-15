@@ -8,6 +8,7 @@ function App() {
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [units, setUnits] = useState("F");
   const [recent, setRecent] = useState(() => {
     const saved = localStorage.getItem("recentCities");
     return saved ? JSON.parse(saved) : [];
@@ -42,9 +43,27 @@ function App() {
     localStorage.removeItem("recentCities");
   };
 
+  const toggleUnits = () => {
+    setUnits((prev) => (prev === "F" ? "C" : "F"));
+  };
+
   return (
     <div className="app">
       <h1>Weather Dashboard</h1>
+
+      <button
+        onClick={toggleUnits}
+        style={{
+          padding: "8px 12px",
+          borderRadius: "8px",
+          border: "1px solid #ccc",
+          cursor: "pointer",
+          backgroundColor: "white",
+          marginTop: "8px",
+        }}
+      >
+        Units: °{units} (click to switch)
+      </button>
 
       <WeatherSearch onSearch={handleSearch} />
 
@@ -111,7 +130,7 @@ function App() {
         <p style={{ marginTop: "16px", color: "crimson" }}>{error}</p>
       )}
 
-      {!loading && !error && <WeatherCard weather={weatherData} />}
+      {!loading && !error && <WeatherCard weather={weatherData} units={units} />}
     </div>
   );
 }
