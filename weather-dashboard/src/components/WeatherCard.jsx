@@ -1,7 +1,11 @@
-function WeatherCard({ weather }) {
+function WeatherCard({ weather, units }) {
   if (!weather) return null;
 
   const formattedTime = new Date(weather.time).toLocaleString();
+
+  const tempF = weather.temperature;
+  const tempC = Math.round(((tempF - 32) * 5) / 9);
+  const displayTemp = units === "F" ? tempF : tempC;
 
   return (
     <div
@@ -20,7 +24,7 @@ function WeatherCard({ weather }) {
       <h2 style={{ margin: "0 0 10px 0" }}>{weather.city}</h2>
 
       <p style={{ fontSize: "24px", margin: "0 0 8px 0" }}>
-        {weather.temperature}°F
+        {displayTemp}°{units}
       </p>
 
       <p style={{ margin: "0 0 8px 0" }}>{weather.condition}</p>
