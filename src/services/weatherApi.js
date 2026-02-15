@@ -1,5 +1,7 @@
 export async function fetchWeather(city) {
-  const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1`;
+  const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(
+    city
+  )}&count=1`;
 
   const geoRes = await fetch(geoUrl);
   const geoData = await geoRes.json();
@@ -25,5 +27,6 @@ export async function fetchWeather(city) {
     temperature: tempF,
     condition: `Wind ${windMph} mph`,
     time: current.time,
+    code: current.weathercode,
   };
 }

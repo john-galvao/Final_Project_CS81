@@ -7,6 +7,16 @@ function WeatherCard({ weather, units }) {
   const tempC = Math.round(((tempF - 32) * 5) / 9);
   const displayTemp = units === "F" ? tempF : tempC;
 
+  const getIcon = (code) => {
+    if (code === 0) return "☀️";
+    if (code <= 3) return "⛅";
+    if (code <= 48) return "☁️";
+    if (code <= 67) return "🌧️";
+    if (code <= 77) return "❄️";
+    if (code <= 99) return "⛈️";
+    return "🌡️";
+  };
+
   return (
     <div
       style={{
@@ -19,9 +29,14 @@ function WeatherCard({ weather, units }) {
         maxWidth: "400px",
         marginLeft: "auto",
         marginRight: "auto",
+        textAlign: "center",
       }}
     >
       <h2 style={{ margin: "0 0 10px 0" }}>{weather.city}</h2>
+
+      <div style={{ fontSize: "40px", marginBottom: "6px" }}>
+        {getIcon(weather.code)}
+      </div>
 
       <p style={{ fontSize: "24px", margin: "0 0 8px 0" }}>
         {displayTemp}°{units}
